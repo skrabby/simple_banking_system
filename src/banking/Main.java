@@ -52,10 +52,10 @@ public class Main {
         } ));
 
         Menu userPanel = new Menu();
-        userPanel.addOption(new Option(mainMenu.getOptionsCount(), "Exit", () -> exit()));
-        userPanel.addOption(new Option(mainMenu.getOptionsCount(), "Balance", () ->
+        userPanel.addOption(new Option(userPanel.getOptionsCount(), "Exit", () -> exit()));
+        userPanel.addOption(new Option(userPanel.getOptionsCount(), "Balance", () ->
                 System.out.println("Balance: " + MenuManager.getLoggedInUser().getBalance() + "\n")));
-        userPanel.addOption(new Option(mainMenu.getOptionsCount(), "Log out", () -> {
+        userPanel.addOption(new Option(userPanel.getOptionsCount(), "Log out", () -> {
                 MenuManager.setLoggedInUser(null);
                 System.out.println("You have successfully logged out!\n");
                 curMenu = MenuManager.getMenu("MAIN_MENU");
