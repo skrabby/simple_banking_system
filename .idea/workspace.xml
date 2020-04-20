@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="132d2618-990d-4cd8-9614-d8eb4f4bd576" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Spring_5_2_3_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Spring_5_2_3_RELEASE.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SBS/SQLManager/QueryManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SBS/SQLManager/QueryManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SBS/banking/CardGenerator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SBS/banking/CardGenerator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SBS/banking/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SBS/banking/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/card.s3db" beforeDir="false" afterPath="$PROJECT_DIR$/card.s3db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SQLManager/QueryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SQLManager/QueryManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/banking/CardGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/banking/CardGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/banking/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/banking/Main.java" afterDir="false" />
@@ -107,7 +102,8 @@
       <option name="presentableId" value="Default" />
       <updated>1587024758165</updated>
       <workItem from="1587024761916" duration="114000" />
-      <workItem from="1587340801593" duration="24435000" />
+      <workItem from="1587340801593" duration="25559000" />
+      <workItem from="1587376604320" duration="7744000" />
     </task>
     <servers />
   </component>
@@ -123,6 +119,10 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="383" y="195" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1587371351483" />
+    <state x="734" y="241" key="#com.intellij.ide.util.MemberChooser" timestamp="1587385838356">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="734" y="241" key="#com.intellij.ide.util.MemberChooser/0.0.1858.1080@0.0.1858.1080" timestamp="1587385838356" />
     <state x="537" y="138" key="CommitChangelistDialog2" timestamp="1587024783970">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
@@ -131,22 +131,22 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="635" y="281" key="FileChooserDialogImpl/0.0.1858.1080@0.0.1858.1080" timestamp="1587365015496" />
-    <state width="1815" height="227" key="GridCell.Tab.0.bottom" timestamp="1587372914363">
+    <state width="1815" height="227" key="GridCell.Tab.0.bottom" timestamp="1587389863463">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1815" height="227" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1587372914363" />
-    <state width="1815" height="227" key="GridCell.Tab.0.center" timestamp="1587372914362">
+    <state width="1815" height="227" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1587389863463" />
+    <state width="1815" height="227" key="GridCell.Tab.0.center" timestamp="1587389863463">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1815" height="227" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1587372914362" />
-    <state width="1815" height="227" key="GridCell.Tab.0.left" timestamp="1587372914362">
+    <state width="1815" height="227" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1587389863463" />
+    <state width="1815" height="227" key="GridCell.Tab.0.left" timestamp="1587389863463">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1815" height="227" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1587372914362" />
-    <state width="1815" height="227" key="GridCell.Tab.0.right" timestamp="1587372914363">
+    <state width="1815" height="227" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1587389863463" />
+    <state width="1815" height="227" key="GridCell.Tab.0.right" timestamp="1587389863463">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1815" height="227" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1587372914363" />
+    <state width="1815" height="227" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1587389863463" />
     <state width="196" height="457" key="HiddenNamespacesPopup" timestamp="1587356747766">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
@@ -155,5 +155,9 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="409" y="114" key="SettingsEditor/0.0.1858.1080@0.0.1858.1080" timestamp="1587351639199" />
+    <state x="569" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1587376604355">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="569" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1587376604354" />
   </component>
 </project>

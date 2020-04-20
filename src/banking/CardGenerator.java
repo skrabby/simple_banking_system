@@ -19,7 +19,7 @@ public class CardGenerator {
         }
     }
 
-    private static int LuhnAlgorithm(int[] generatedNum) {
+    public static int LuhnAlgorithm(int[] generatedNum) {
         for (int i = 0; i < generatedNum.length; i++) {
             if (i % 2 == 0)
                 generatedNum[i] *= 2;

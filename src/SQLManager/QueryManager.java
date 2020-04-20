@@ -99,6 +99,9 @@ public class QueryManager {
                 case ("COUNT"):
                     resultSet.next();
                     return resultSet.getString("count");
+                case ("BALANCE"):
+                    resultSet.next();
+                    return resultSet.getString("balance");
             }
         } catch (SQLException e) {
             System.out.println("Connection failure.");

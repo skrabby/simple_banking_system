@@ -20,4 +20,16 @@ public class User {
     public long getBalance() {
         return balance;
     }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void addToBalance(long sum) {
+        balance += sum;
+    }
+
+    public void subFromBalance(long sum) {
+        balance -= sum;
+    }
 }

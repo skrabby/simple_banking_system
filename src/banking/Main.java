@@ -54,7 +54,7 @@ public class Main {
                     if (!file.exists()) {
                         cardsDataBase.createNewDatabase();
                         cardsDataBase.createNewTable("card",
-                                "id INT PRIMARY KEY,\n"
+                                "id INTEGER,\n"
                                         + "	number TEXT,\n"
                                         + " pin TEXT,\n"
                                         + "	balance INTEGER DEFAULT 0\n");
@@ -121,16 +121,70 @@ public class Main {
                 curMenu = MenuManager.getMenu("USER_PANEL");
             } else
                 System.out.println("\nWrong card number or PIN!\n");
-        } ));
+        }));
 
         Menu userPanel = new Menu();
         userPanel.addOption(new Option(userPanel.getOptionsCount(), "Exit", () -> exit()));
         userPanel.addOption(new Option(userPanel.getOptionsCount(), "Balance", () ->
                 System.out.println("Balance: " + MenuManager.getLoggedInUser().getBalance() + "\n")));
+        userPanel.addOption(new Option(userPanel.getOptionsCount(), "Add income", () -> {
+            User user = MenuManager.getLoggedInUser();
+            System.out.println("How much money do you want to deposit?");
+            int sum = scanner.nextInt();
+            user.addToBalance(sum);
+            cardsDataBase.executeWriteQuery("UPDATE card SET balance = " + user.getBalance() + " WHERE number = '" + user.getCardNumber() + "' AND pin = '" + user.getPIN() + "';");
+            System.out.println();
+        }));
+        userPanel.addOption(new Option(userPanel.getOptionsCount(), "Do transfer", () -> {
+            User user = MenuManager.getLoggedInUser();
+            System.out.println("Enter destination card number:");
+            String userCardNumInput = scanner.next();
+            int[] card15 = new int[userCardNumInput.length() - 1];
+            for (int i = 0; i < userCardNumInput.length() - 1; i++) {
+                card15[i] = Character.getNumericValue(userCardNumInput.charAt(i));
+            }
+            // Check for errors
+            if (userCardNumInput.equals(user.getCardNumber())) {
+                System.out.println("You can't transfer money to the same account!\n");
+                return;
+            } else if (Character.getNumericValue(userCardNumInput.charAt(userCardNumInput.length() - 1)) != CardGenerator.LuhnAlgorithm(card15)) {
+                System.out.println("Probably you made mistake in card number. Please try again!\n");
+                return;
+            }
+            if (TYPE_SQL.equals("SQLITE")) {
+                if (cardsDataBase.executeReadQuery("SELECT EXISTS(SELECT * FROM card WHERE number = '" + userCardNumInput + "') AS \"exists\";", "exists").equals("0")) {
+                    System.out.println("Such a card does not exist.\n");
+                    return;
+                }
+            } else {
+                if (cardsDataBase.executeReadQuery("SELECT EXISTS(SELECT * FROM card WHERE number = '" + userCardNumInput + "') AS \"exists\";", "exists").equals("f")) {
+                    System.out.println("Such a card does not exist.\n");
+                    return;
+                }
+            }
+            System.out.println("How much money do you want to transfer?");
+            int userAmountInput = scanner.nextInt();
+            if (userAmountInput <= user.getBalance()) {
+                int newBalance = Integer.valueOf(cardsDataBase.executeReadQuery("SELECT balance FROM card WHERE number = '" + userCardNumInput + "';", "balance")) + userAmountInput;
+                cardsDataBase.executeWriteQuery("UPDATE card SET balance = " + newBalance + " WHERE number = '" + userCardNumInput + "';");
+                cardsDataBase.executeWriteQuery("UPDATE card SET balance = " + (user.getBalance() - userAmountInput) + " WHERE number = '" + user.getCardNumber() + "';");
+                user.subFromBalance(userAmountInput);
+                System.out.println("Success!\n");
+            } else {
+                System.out.println("Transaction failed: insufficient funds.\n");
+            }
+        }));
+        userPanel.addOption(new Option(userPanel.getOptionsCount(), "Close account", () -> {
+            User user = MenuManager.getLoggedInUser();
+            cardsDataBase.executeWriteQuery("DELETE FROM card WHERE number = '" + user.getCardNumber() + "' AND pin = '" + user.getPIN() + "';");
+            System.out.println("Account is closed\n");
+            MenuManager.setLoggedInUser(null);
+            curMenu = MenuManager.getMenu("MAIN_MENU");
+        }));
         userPanel.addOption(new Option(userPanel.getOptionsCount(), "Log out", () -> {
-                MenuManager.setLoggedInUser(null);
-                System.out.println("You have successfully logged out!\n");
-                curMenu = MenuManager.getMenu("MAIN_MENU");
+            MenuManager.setLoggedInUser(null);
+            System.out.println("You have successfully logged out!\n");
+            curMenu = MenuManager.getMenu("MAIN_MENU");
         }));
         MenuManager.addMenu("MAIN_MENU", mainMenu);
         MenuManager.addMenu("USER_PANEL", userPanel);
