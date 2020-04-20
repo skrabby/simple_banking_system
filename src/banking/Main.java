@@ -2,11 +2,9 @@ package banking;
 
 import SQLManager.QueryManager;
 
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -16,11 +14,15 @@ public class Main {
     // Current menu
     private static Menu curMenu;
 
-    // SQLConnection
-    public static QueryManager cardsDataBase = new QueryManager(
-            "jdbc:postgresql://packy.db.elephantsql.com:5432/cmhrlftk",
-            "cmhrlftk",
-            "ImVjClUtPft6FK_lcpj0Zc5mDMOAI5uA");
+    /* Configuration SQL (SQLITE/POSTGRES Only)
+       SQLite - local
+       Postgres - online (elephantsql.com)
+     */
+    public static String TYPE_SQL = "SQLITE";
+    public static QueryManager cardsDataBase;
+    // SerialCount
+    private static int serialID = 1;
+
     private static void exit() {
         System.out.println("Bye!\n");
         System.exit(0);
@@ -28,20 +30,54 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
         Scanner scanner = new Scanner(System.in);
-        // Printing Existing Cards in the DataBase
-        System.out.println("CARDS DATABASE\n");
-        ResultSet resultSet = cardsDataBase.executeReadQuery("SELECT * FROM public.cards");
-        System.out.printf("%-30.30s  %-30.30s  %-30.30s%n", "number", "pin", "balance");
-        while (resultSet.next()) {
-            System.out.printf("%-30.30s  %-30.30s  %-30.30s%n", resultSet.getString("number"), resultSet.getString("pin"), resultSet.getString("balance"));
+
+        if (TYPE_SQL.equals("POSTGRES")) {
+            cardsDataBase = new QueryManager(
+                    "jdbc:postgresql://packy.db.elephantsql.com:5432/cmhrlftk",
+                    "cmhrlftk",
+                    "ImVjClUtPft6FK_lcpj0Zc5mDMOAI5uA");
+            cardsDataBase.createNewDatabase();
+            cardsDataBase.createNewTable("card",
+                    "id BIGSERIAL PRIMARY KEY,\n"
+                            + "	number TEXT,\n"
+                            + " pin TEXT,\n"
+                            + "	balance INTEGER DEFAULT 0\n");
+        } else if (TYPE_SQL.equals("SQLITE")) {
+            if (args.length == 2) {
+                if (args[0].equals("-fileName")) {
+                    cardsDataBase = new QueryManager(
+                            "jdbc:sqlite:./" + args[1],
+                            "",
+                            ""
+                    );
+                    File file = new File("./" + args[1]);
+                    if (!file.exists()) {
+                        cardsDataBase.createNewDatabase();
+                        cardsDataBase.createNewTable("card",
+                                "id INT PRIMARY KEY,\n"
+                                        + "	number TEXT,\n"
+                                        + " pin TEXT,\n"
+                                        + "	balance INTEGER DEFAULT 0\n");
+                    }
+                }
+            }
+        } else {
+            System.out.println("SQL Configuration can only be either SQLITE or POSTGRES");
+            exit();
         }
-        System.out.println();
+
+        String flag = (TYPE_SQL.equals("POSTGRES")) ? "COUNT" : "COUNT(*)";
+        serialID = Integer.valueOf(cardsDataBase.executeReadQuery("SELECT COUNT(*) FROM card", flag));
+
+        // Printing Existing Cards in the DataBase
+        System.out.printf("%-5.5s  %-30.30s  %-30.30s  %-30.30s%n", "id", "number", "pin", "balance");
+        System.out.println(cardsDataBase.executeReadQuery("SELECT * FROM card", "select"));
         Menu mainMenu = new Menu();
         mainMenu.addOption(new Option(mainMenu.getOptionsCount(), "Exit", () -> exit()));
         mainMenu.addOption(new Option(mainMenu.getOptionsCount(), "Create account", () -> {
             String generatedCard = CardGenerator.cardNumber(BIN);
             String generatedPIN = CardGenerator.pinNumber();
-            cardsDataBase.executeWriteQuery("INSERT INTO cards (number, pin, balance) VALUES ('" + generatedCard + "', '" +
+            cardsDataBase.executeWriteQuery("INSERT INTO card (id, number, pin, balance) VALUES ('" + serialID++ + "', '" + generatedCard + "', '" +
                     generatedPIN + "', " + 0 + ")");
             System.out.println("Your card have been created\n" +
                     "Your card number:\n" +
@@ -56,19 +92,34 @@ public class Main {
             String userPinInput = scanner.next();
 
             User user = null;
-            ResultSet result = cardsDataBase.executeReadQuery("SELECT EXISTS(SELECT * FROM cards WHERE number = '" + userCardNumInput + "' AND pin = '" + userPinInput + "')");
-            result.next();
-            if (result.getString("exists").equals("t")) {
-                result = cardsDataBase.executeReadQuery("SELECT * FROM cards WHERE number = '" + userCardNumInput + "' AND pin = '" + userPinInput + "'");
+
+            //Postgres version
+            if (TYPE_SQL.equals("POSTGRES")) {
+                ResultSet result = cardsDataBase.executeReadQuery("SELECT EXISTS(SELECT * FROM card WHERE number = '" + userCardNumInput + "' AND pin = '" + userPinInput + "') AS \"exists\"");
                 result.next();
-                user = new User(result.getString("number"), result.getString("pin"), result.getLong("balance"));
+                if (result.getString("exists").equals("t")) {
+                    result = cardsDataBase.executeReadQuery("SELECT * FROM card WHERE number = '" + userCardNumInput + "' AND pin = '" + userPinInput + "'");
+                    result.next();
+                    user = new User(result.getString("id"), result.getString("number"), result.getString("pin"), result.getLong("balance"));
+                }
             }
+
+            //SQLite version
+            if (TYPE_SQL.equals("SQLITE")) {
+                String result = cardsDataBase.executeReadQuery("SELECT EXISTS(SELECT * FROM card WHERE number = '" + userCardNumInput + "' AND pin = '" + userPinInput + "') AS \"exists\"", "exists");
+                if (result.equals("1")) {
+                    result = cardsDataBase.executeReadQuery("SELECT * FROM card WHERE number = '" + userCardNumInput + "' AND pin = '" + userPinInput + "'", "user");
+                    String[] split = result.split(" ");
+                    user = new User(split[0], split[1], split[2], Long.valueOf(split[3]));
+                }
+            }
+
+
             if (user != null) {
                 MenuManager.setLoggedInUser(user);
                 System.out.println("\nYou have successfully logged in\n");
                 curMenu = MenuManager.getMenu("USER_PANEL");
-            }
-            else
+            } else
                 System.out.println("\nWrong card number or PIN!\n");
         } ));
 

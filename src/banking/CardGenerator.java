@@ -7,11 +7,16 @@ import java.util.stream.IntStream;
 
 public class CardGenerator {
     public static boolean isOccupied(String AI) throws SQLException {
-        ResultSet resultSet = Main.cardsDataBase.executeReadQuery("SELECT EXISTS(SELECT * FROM cards WHERE number = '" + AI + "')");
-        resultSet.next();
-        if (resultSet.getString("exists").equals("t"))
-            return true;
-        return false;
+        if (Main.TYPE_SQL.equals("POSTGRES")) {
+            ResultSet resultSet = Main.cardsDataBase.executeReadQuery("SELECT EXISTS(SELECT * FROM card WHERE number = '" + AI + "') as \"exists\"");
+            resultSet.next();
+            return resultSet.getString("exists").equals("t");
+        }
+        // SQLite approach by default
+        else {
+            String result = Main.cardsDataBase.executeReadQuery("SELECT EXISTS(SELECT * FROM card WHERE number = '" + AI + "') as \"exists\"", "exists");
+            return result.equals("1");
+        }
     }
 
     private static int LuhnAlgorithm(int[] generatedNum) {
