@@ -43,7 +43,7 @@ public class Main {
                             + " pin TEXT,\n"
                             + "	balance INTEGER DEFAULT 0\n");
         } else if (TYPE_SQL.equals("SQLITE")) {
-            if (args.length == 2) {
+            if (args.length >= 2) {
                 if (args[0].equals("-fileName")) {
                     cardsDataBase = new QueryManager(
                             "jdbc:sqlite:./" + args[1],
