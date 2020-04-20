@@ -1,5 +1,9 @@
 package banking;
 
+import SQLManager.QueryManager;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,27 +13,36 @@ public class Main {
     // Bank Identification Number
     private static final String BIN = "400000";
 
-    // Temporary account storage
-    private static Map<String, User> ClientCards = new HashMap<>();
-
     // Current menu
     private static Menu curMenu;
 
-    public static Map<String, User> getClientCards() { return ClientCards; }
-
+    // SQLConnection
+    public static QueryManager cardsDataBase = new QueryManager(
+            "jdbc:postgresql://packy.db.elephantsql.com:5432/cmhrlftk",
+            "cmhrlftk",
+            "ImVjClUtPft6FK_lcpj0Zc5mDMOAI5uA");
     private static void exit() {
         System.out.println("Bye!\n");
         System.exit(0);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Scanner scanner = new Scanner(System.in);
+        // Printing Existing Cards in the DataBase
+        System.out.println("CARDS DATABASE\n");
+        ResultSet resultSet = cardsDataBase.executeReadQuery("SELECT * FROM public.cards");
+        System.out.printf("%-30.30s  %-30.30s  %-30.30s%n", "number", "pin", "balance");
+        while (resultSet.next()) {
+            System.out.printf("%-30.30s  %-30.30s  %-30.30s%n", resultSet.getString("number"), resultSet.getString("pin"), resultSet.getString("balance"));
+        }
+        System.out.println();
         Menu mainMenu = new Menu();
         mainMenu.addOption(new Option(mainMenu.getOptionsCount(), "Exit", () -> exit()));
         mainMenu.addOption(new Option(mainMenu.getOptionsCount(), "Create account", () -> {
             String generatedCard = CardGenerator.cardNumber(BIN);
             String generatedPIN = CardGenerator.pinNumber();
-            ClientCards.put(generatedCard, new User(generatedCard, generatedPIN));
+            cardsDataBase.executeWriteQuery("INSERT INTO cards (number, pin, balance) VALUES ('" + generatedCard + "', '" +
+                    generatedPIN + "', " + 0 + ")");
             System.out.println("Your card have been created\n" +
                     "Your card number:\n" +
                     generatedCard + "\n" +
@@ -41,8 +54,16 @@ public class Main {
             String userCardNumInput = scanner.next();
             System.out.println("Enter your PIN:");
             String userPinInput = scanner.next();
-            User user = ClientCards.get(userCardNumInput);
-            if (user != null && userPinInput.equals(user.getPIN())) {
+
+            User user = null;
+            ResultSet result = cardsDataBase.executeReadQuery("SELECT EXISTS(SELECT * FROM cards WHERE number = '" + userCardNumInput + "' AND pin = '" + userPinInput + "')");
+            result.next();
+            if (result.getString("exists").equals("t")) {
+                result = cardsDataBase.executeReadQuery("SELECT * FROM cards WHERE number = '" + userCardNumInput + "' AND pin = '" + userPinInput + "'");
+                result.next();
+                user = new User(result.getString("number"), result.getString("pin"), result.getLong("balance"));
+            }
+            if (user != null) {
                 MenuManager.setLoggedInUser(user);
                 System.out.println("\nYou have successfully logged in\n");
                 curMenu = MenuManager.getMenu("USER_PANEL");

@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="132d2618-990d-4cd8-9614-d8eb4f4bd576" name="Default Changelist" comment="" />
+    <list default="true" id="132d2618-990d-4cd8-9614-d8eb4f4bd576" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Spring_5_2_3_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Spring_5_2_3_RELEASE.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SBS/banking/Action.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SBS/banking/Action.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SBS/banking/CardGenerator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SBS/banking/CardGenerator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SBS/banking/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SBS/banking/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SBS/banking/Option.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SBS/banking/Option.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/banking/CardGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/banking/CardGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/banking/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/banking/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/banking/Option.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/banking/Option.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/banking/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/banking/User.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,9 +31,10 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/postgresql-42.2.12.jar!/" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -55,6 +67,7 @@
       <option name="presentableId" value="Default" />
       <updated>1587024758165</updated>
       <workItem from="1587024761916" duration="114000" />
+      <workItem from="1587340801593" duration="6391000" />
     </task>
     <servers />
   </component>
@@ -70,21 +83,29 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="537" y="138" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1587024783970" />
-    <state width="1657" height="292" key="GridCell.Tab.0.bottom" timestamp="1587024875307">
+    <state x="635" y="281" key="FileChooserDialogImpl" timestamp="1587340887047">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1657" height="292" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1587024875307" />
-    <state width="1657" height="292" key="GridCell.Tab.0.center" timestamp="1587024875307">
+    <state x="635" y="281" key="FileChooserDialogImpl/0.0.1858.1080@0.0.1858.1080" timestamp="1587340887047" />
+    <state width="1815" height="296" key="GridCell.Tab.0.bottom" timestamp="1587350247112">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1657" height="292" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1587024875307" />
-    <state width="1657" height="292" key="GridCell.Tab.0.left" timestamp="1587024875306">
+    <state width="1815" height="296" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1587350247112" />
+    <state width="1815" height="296" key="GridCell.Tab.0.center" timestamp="1587350247112">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1657" height="292" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1587024875306" />
-    <state width="1657" height="292" key="GridCell.Tab.0.right" timestamp="1587024875307">
+    <state width="1815" height="296" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1587350247112" />
+    <state width="1815" height="296" key="GridCell.Tab.0.left" timestamp="1587350247112">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1657" height="292" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1587024875307" />
+    <state width="1815" height="296" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1587350247112" />
+    <state width="1815" height="296" key="GridCell.Tab.0.right" timestamp="1587350247112">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="296" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1587350247112" />
+    <state x="409" y="114" key="SettingsEditor" timestamp="1587340889330">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="409" y="114" key="SettingsEditor/0.0.1858.1080@0.0.1858.1080" timestamp="1587340889330" />
   </component>
 </project>

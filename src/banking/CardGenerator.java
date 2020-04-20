@@ -1,11 +1,15 @@
 package banking;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Random;
 import java.util.stream.IntStream;
 
 public class CardGenerator {
-    public static boolean isOccupied(String AI) {
-        if (Main.getClientCards().get(AI) != null)
+    public static boolean isOccupied(String AI) throws SQLException {
+        ResultSet resultSet = Main.cardsDataBase.executeReadQuery("SELECT EXISTS(SELECT * FROM cards WHERE number = '" + AI + "')");
+        resultSet.next();
+        if (resultSet.getString("exists").equals("t"))
             return true;
         return false;
     }
@@ -21,7 +25,7 @@ public class CardGenerator {
         return 10 - sum % 10 == 10 ? 0 : 10 - sum % 10;
     }
 
-    public static String cardNumber(String BIN) {
+    public static String cardNumber(String BIN) throws SQLException {
         String AccountIdentifier = "";
         int lenBIN = BIN.length();
         int[] generatedNum = new int[lenBIN + 9];

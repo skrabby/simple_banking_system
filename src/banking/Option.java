@@ -1,7 +1,9 @@
 package banking;
 
+import java.sql.SQLException;
+
 interface Action {
-    void activate();
+    void activate() throws SQLException;
 }
 
 public class Option{
@@ -15,7 +17,7 @@ public class Option{
         this.action = action;
     }
 
-    public void invokeAction() {
+    public void invokeAction() throws SQLException {
         action.activate();
     }
 

@@ -19,6 +19,7 @@
       <root url="jar://$PROJECT_DIR$/lib/aopalliance-1.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/spring-tx-5.2.3.RELEASE.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/spring-test-5.2.3.RELEASE.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/postgresql-42.2.12.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
